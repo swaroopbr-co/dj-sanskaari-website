@@ -9,7 +9,7 @@ async function loadEvents() {
     if (!container) return;
 
     try {
-        const response = await fetch('/api/events');
+        const response = await fetch('data/events.json');
         const events = await response.json();
 
         if (events.length === 0) {
@@ -56,7 +56,7 @@ async function loadMixes() {
     if (!container) return;
 
     try {
-        const response = await fetch('/api/mixes');
+        const response = await fetch('data/mixes.json');
         const mixes = await response.json();
 
         if (mixes.length === 0) {

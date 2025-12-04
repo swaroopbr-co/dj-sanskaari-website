@@ -1,34 +1,26 @@
 [
     {
-        "title": "Neon Nights Festival",
-        "date": "2025-12-15",
-        "venue": "Skyline Arena, Mumbai",
-        "description": "Headlining the main stage with an exclusive 2-hour set featuring unreleased tracks.",
-        "status": "Filling Fast",
-        "bookingUrl": "https://in.bookmyshow.com/"
+        "date": "Dec 24, 2025",
+        "title": "Christmas Eve Bash",
+        "location": "Club Vibe, Mumbai",
+        "ticketLink": "https://example.com/tickets"
     },
     {
-        "title": "New Year's Eve Bash",
-        "date": "2025-12-31",
-        "venue": "The Grand Palace, Bangalore",
-        "description": "Ringing in the new year with high-energy beats and a spectacular light show.",
-        "status": "Sold Out",
-        "bookingUrl": ""
+        "date": "Dec 31, 2025",
+        "title": "New Year Extravaganza",
+        "location": "Grand Hotel, Delhi",
+        "ticketLink": "https://example.com/tickets"
     },
     {
-        "title": "Sunburn Campus Tour",
-        "date": "2026-01-20",
-        "venue": "IIT Delhi Campus",
-        "description": "Bringing the festival vibe to the campus with a special student showcase.",
-        "status": "Available",
-        "bookingUrl": "https://in.bookmyshow.com/"
+        "date": "Feb 14, 2026",
+        "title": "Valentine's Special",
+        "location": "Rooftop Bar, Pune",
+        "ticketLink": "https://example.com/tickets"
     },
     {
-        "title": "Secret Warehouse Party",
-        "date": "2026-02-14",
-        "venue": "Undisclosed Location, Goa",
-        "description": "An intimate underground techno experience.",
-        "status": "Coming Soon",
-        "bookingUrl": ""
+        "date": "Mar 10, 2026",
+        "title": "Holi High",
+        "location": "Open Grounds, Goa",
+        "ticketLink": "https://example.com/tickets"
     }
 ]

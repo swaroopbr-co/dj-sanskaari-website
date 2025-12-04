@@ -66,24 +66,13 @@ window.submitToGoogleSheets = async function (formData) {
 
     console.log('Preparing submission:', data);
 
-    try {
-        // Send data to local Node.js server
-        const response = await fetch(SHEETS_CONFIG.scriptUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        return result;
-
-    } catch (error) {
-        console.error('Submission failed:', error);
-        return {
-            success: false,
-            message: 'Failed to connect to server. Ensure Node.js backend is running.'
-        };
-    }
+    // Simulate success for now since we are static
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log('Form submitted (Simulation):', data);
+            resolve({ result: 'success' });
+            // Optional: Redirect to mailto
+            // window.location.href = `mailto:your-email@example.com?subject=Booking Request&body=${encodeURIComponent(JSON.stringify(data))}`;
+        }, 1000);
+    });
 };

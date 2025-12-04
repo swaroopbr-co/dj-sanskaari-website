@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Summer Vibes 2025",
+        "genre": "Deep House • 128 BPM",
+        "link": "https://soundcloud.com/example/summer",
+        "imageUrl": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+    },
+    {
+        "title": "Bollywood Blast",
+        "genre": "Bollywood Remix • 135 BPM",
+        "link": "https://soundcloud.com/example/bollywood",
+        "imageUrl": "https://images.unsplash.com/photo-1514525253440-b393452e8d26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+    },
+    {
+        "title": "Punjabi Power",
+        "genre": "Punjabi",
+        "link": "https://soundcloud.com/example/punjabi",
+        "imageUrl": "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=500&auto=format&fit=crop&q=60"
+    },
+    {
+        "title": "Hip Hop Hustle",
+        "genre": "Hip Hop",
+        "link": "https://soundcloud.com/example/hiphop",
+        "imageUrl": "https://images.unsplash.com/photo-1571266028243-371695039980?w=500&auto=format&fit=crop&q=60"
+    }
+]
