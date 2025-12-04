@@ -73,7 +73,7 @@ window.submitToGoogleSheets = async function (formData) {
     // But since we are hijacking the submit event in main.js, we should handle it here.
 
     // We will use a placeholder ID. The user will need to sign up for Formspree (free) and replace it.
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mzzzdnbo'; // Using a generic demo ID or instructing user
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xpwvlqjd'; // User provided ID
 
     try {
         const response = await fetch(FORMSPREE_ENDPOINT, {
