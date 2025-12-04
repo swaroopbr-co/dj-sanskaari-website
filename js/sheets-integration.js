@@ -66,17 +66,9 @@ window.submitToGoogleSheets = async function (formData) {
 
     console.log('Preparing submission:', data);
 
-    // Use Formspree for static site form submission
-    // Replace 'YOUR_FORMSPREE_ID' with the user's actual ID later, or use a generic one if possible, 
-    // but for now we will use a direct fetch to a demo endpoint or instruct user to setup.
-    // Actually, the best way is to change the HTML form action.
-    // But since we are hijacking the submit event in main.js, we should handle it here.
-
-    // We will use a placeholder ID. The user will need to sign up for Formspree (free) and replace it.
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xpwvlqjd'; // User provided ID
-
+    // Send data to Vercel Serverless Function
     try {
-        const response = await fetch(FORMSPREE_ENDPOINT, {
+        const response = await fetch('/api/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -84,14 +76,19 @@ window.submitToGoogleSheets = async function (formData) {
             body: JSON.stringify(data)
         });
 
+        const result = await response.json();
+
         if (response.ok) {
             return { result: 'success' };
         } else {
-            throw new Error('Formspree submission failed');
+            throw new Error(result.error || 'Submission failed');
         }
+
     } catch (error) {
-        console.error('Submission error:', error);
-        // Fallback to simulation so the user sees "Success" even if they haven't set up Formspree yet
-        return { result: 'success', message: 'Simulation (Configure Formspree for real emails)' };
+        console.error('Submission failed:', error);
+        return {
+            success: false,
+            message: 'Failed to submit. Please try again later.'
+        };
     }
 };
