@@ -93,6 +93,69 @@ app.get('/api/debug', async (req, res) => {
         status.sanity.connection = `Failed: ${err.message}`;
     }
 
+    // Helper to ensure sheet exists
+    async function ensureSheetExists(auth) {
+        return true;
+    }
+
+    // API Endpoint to submit booking
+    app.post('/api/submit', async (req, res) => {
+        try {
+            const data = req.body;
+            console.log('Received submission:', data);
+
+            let nextSerial = 1;
+            try {
+                const rangeData = await sheets.spreadsheets.values.get({
+                    spreadsheetId: SPREADSHEET_ID,
+                    range: `'${SHEET_NAME}'!A:A`,
+                });
+                const rows = rangeData.data.values;
+                if (rows && rows.length > 0) {
+                    nextSerial = rows.length;
+                }
+            } catch (err) {
+                console.warn('Could not calculate serial number, defaulting to 1', err);
+            }
+
+            const row = [
+                nextSerial,
+                data.timestamp,
+                data.type,
+                data.name,
+                data.phone,
+                data.email,
+                data.eventDate,
+                data.message
+            ];
+
+            const response = await sheets.spreadsheets.values.append({
+                spreadsheetId: SPREADSHEET_ID,
+                range: `'${SHEET_NAME}'!A1`,
+                valueInputOption: 'USER_ENTERED',
+                resource: { values: [row] },
+            });
+
+            res.status(200).json({ success: true, message: 'Success', data: response.data });
+
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
+
+    // API Endpoint to get Events (Sanity CMS)
+    app.get('/api/events', async (req, res) => {
+        try {
+            const query = '*[_type == "event"]{date, title, location, ticketLink} | order(date asc)';
+            const events = await sanity.fetch(query);
+            res.json(events);
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
+
     // API Endpoint to get Mixes (Sanity CMS)
     app.get('/api/mixes', async (req, res) => {
         try {
