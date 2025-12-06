@@ -85,7 +85,7 @@ h6 {
     display: inline-block;
     left: 50%;
     transform: translateX(-50%);
-    opacity: 0;
+    /* opacity: 0; Removed to ensure visibility */
     /* animation: fadeUp 0.8s forwards; Removed to allow JS control */
 }
 
