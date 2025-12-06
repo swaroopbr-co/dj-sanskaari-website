@@ -11,6 +11,7 @@ async function loadEvents() {
     try {
         const response = await fetch('/api/events');
         const events = await response.json();
+        console.log('Events loaded:', events);
 
         if (events.length === 0) {
             container.innerHTML = '<div style="color: var(--text-secondary); text-align: center; grid-column: 1/-1;">No upcoming events found.</div>';
@@ -184,8 +185,8 @@ function initScrollAnimations() {
     }, observerOptions);
 
     document.querySelectorAll('[data-scroll]').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(50px)';
+        // el.style.opacity = '0'; // DISABLED: Ensure visibility
+        // el.style.transform = 'translateY(50px)';
         // "Butter" smooth transition
         el.style.transition = 'all 1s cubic-bezier(0.16, 1, 0.3, 1)';
         observer.observe(el);
@@ -199,6 +200,7 @@ async function initGallery() {
     try {
         const response = await fetch('/api/gallery');
         const items = await response.json();
+        console.log('Gallery items loaded:', items);
         const track = document.getElementById('gallery-track');
         const modal = document.getElementById('gallery-modal');
         const modalContent = modal.querySelector('.modal-media-container');
