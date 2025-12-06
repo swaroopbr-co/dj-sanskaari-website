@@ -130,6 +130,44 @@ app.get('/api/mixes', async (req, res) => {
     }
 });
 
+// Debug Endpoint
+app.get('/api/debug', async (req, res) => {
+    const status = {
+        env: {
+            PORT: process.env.PORT || 'Not Set (Default 3000)',
+            SPREADSHEET_ID: process.env.SPREADSHEET_ID ? 'Set' : 'MISSING',
+            GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL ? 'Set' : 'MISSING',
+            GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY ? (process.env.GOOGLE_PRIVATE_KEY.includes('BEGIN PRIVATE KEY') ? 'Valid Format' : 'Invalid Format') : 'MISSING',
+        },
+        sanity: {
+            projectId: 'ipk33t5a',
+            dataset: 'production',
+            connection: 'Pending'
+        },
+        sheets: {
+            connection: 'Pending'
+        }
+    };
+
+    // Test Sanity
+    try {
+        const count = await sanity.fetch('count(*[_type == "event"])');
+        status.sanity.connection = `Success (Found ${count} events)`;
+    } catch (err) {
+        status.sanity.connection = `Failed: ${err.message}`;
+    }
+
+    // Test Sheets
+    try {
+        await sheets.spreadsheets.get({ spreadsheetId: SPREADSHEET_ID });
+        status.sheets.connection = 'Success';
+    } catch (err) {
+        status.sheets.connection = `Failed: ${err.message}`;
+    }
+
+    res.json(status);
+});
+
 // Start Server
 if (require.main === module) {
     app.listen(PORT, () => {
