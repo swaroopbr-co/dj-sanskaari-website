@@ -35,6 +35,17 @@ const auth = new google.auth.GoogleAuth({
 
 const sheets = google.sheets({ version: 'v4', auth });
 
+// Sanity Configuration
+const { createClient } = require('@sanity/client');
+const sanity = createClient({
+    projectId: 'ipk33t5a',
+    dataset: 'production',
+    useCdn: false,
+    apiVersion: '2023-05-03',
+});
+
+// Helper to ensure sheet exists
+
 // ... (rest of code)
 
 // Debug Endpoint
@@ -45,7 +56,7 @@ app.get('/api/debug', async (req, res) => {
             SPREADSHEET_ID: process.env.SPREADSHEET_ID ? 'Set' : 'MISSING',
             GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL ? 'Set' : 'MISSING',
             GOOGLE_PRIVATE_KEY_FORMAT: privateKey ?
-                (privateKey.startsWith('-----BEGIN PRIVATE KEY-----') ? 'Valid Header' : 'Invalid Header') : 'MISSING',
+                (privateKey.startsWith('-----BEGIN PRIVATE KEY-----') && privateKey.endsWith('-----END PRIVATE KEY-----') ? 'Valid Header & Footer' : 'Invalid Format') : 'MISSING',
             GOOGLE_PRIVATE_KEY_LENGTH: privateKey ? privateKey.length : 0
         },
         sanity: {
