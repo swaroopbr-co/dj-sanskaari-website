@@ -204,8 +204,8 @@ async function initGallery() {
         const modalContent = modal.querySelector('.modal-media-container');
         const modalClose = modal.querySelector('.modal-close');
 
-        // Duplicate items for seamless scrolling
-        const allItems = [...items, ...items];
+        // Use items directly (removed duplication)
+        const allItems = items;
 
         allItems.forEach(item => {
             const el = document.createElement('div');
