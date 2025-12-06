@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initParallax();
     initScrollAnimations();
-    loadContent();
+    // loadContent(); // Removed legacy call
     initGallery();
     initBookingForm();
 });
@@ -192,102 +192,7 @@ function initScrollAnimations() {
     });
 }
 
-// Content Loading
-async function loadContent() {
-    // Load Mixes
-    try {
-        const mixesResponse = await fetch('data/playlists.json');
-        const mixes = await mixesResponse.json();
-        const mixesContainer = document.getElementById('mixes-container');
-
-        mixes.forEach(mix => {
-            const mixCard = document.createElement('div');
-            mixCard.className = 'mix-card';
-            mixCard.setAttribute('data-scroll', ''); // Add scroll animation attribute
-            mixCard.innerHTML = `
-                <a href="${mix.link}" target="_blank">
-                    <img src="${mix.cover}" alt="${mix.title}" class="mix-cover">
-                    <div class="mix-info">
-                        <h3 class="mix-title">${mix.title}</h3>
-                        <span class="mix-link">Listen Now <i class="fas fa-play"></i></span>
-                    </div>
-                </a>
-            `;
-            mixesContainer.appendChild(mixCard);
-        });
-
-        // Re-init scroll animations for new elements
-        initScrollAnimations();
-    } catch (error) {
-        console.error('Error loading mixes:', error);
-    }
-
-    // Load Events
-    try {
-        const eventsResponse = await fetch('data/events.json');
-        const events = await eventsResponse.json();
-        const eventsContainer = document.getElementById('events-container');
-
-        events.forEach(event => {
-            const date = new Date(event.date);
-            const day = date.getDate();
-            const month = date.toLocaleString('default', { month: 'short' });
-
-            // Determine status class
-            let statusClass = 'status-available';
-            let statusText = event.status || 'Available';
-            let btnDisabled = '';
-            let btnText = 'Book Now';
-            let btnUrl = event.bookingUrl || '#';
-
-            if (statusText === 'Sold Out') {
-                statusClass = 'status-soldout';
-                btnDisabled = 'disabled';
-                btnText = 'Sold Out';
-            } else if (statusText === 'Filling Fast') {
-                statusClass = 'status-filling';
-            } else if (statusText === 'Coming Soon') {
-                statusClass = 'status-coming';
-                btnDisabled = 'disabled';
-                btnText = 'Coming Soon';
-            }
-
-            const eventCard = document.createElement('div');
-            eventCard.className = 'event-card';
-            eventCard.setAttribute('data-scroll', '');
-            eventCard.innerHTML = `
-                <div class="event-date">
-                    <span class="date-day">${day}</span>
-                    <span class="date-month">${month}</span>
-                </div>
-                <div class="event-details">
-                    <div class="event-header">
-                        <h3>${event.title}</h3>
-                        <span class="event-status ${statusClass}">${statusText}</span>
-                    </div>
-                    <div class="event-venue">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>${event.venue}</span>
-                    </div>
-                    <p>${event.description}</p>
-                    ${event.bookingUrl || statusText === 'Sold Out' || statusText === 'Coming Soon' ? `
-                    <div class="event-actions">
-                        <a href="${btnUrl}" target="_blank" class="btn btn-sm btn-book ${btnDisabled}">
-                            ${btnText} <i class="fas fa-ticket-alt"></i>
-                        </a>
-                    </div>
-                    ` : ''}
-                </div>
-            `;
-            eventsContainer.appendChild(eventCard);
-        });
-
-        // Re-init scroll animations for new elements
-        initScrollAnimations();
-    } catch (error) {
-        console.error('Error loading events:', error);
-    }
-}
+// Content Loading - REMOVED (Replaced by loadEvents and loadMixes)
 
 // Gallery Logic
 async function initGallery() {
