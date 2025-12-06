@@ -93,6 +93,35 @@ app.get('/api/debug', async (req, res) => {
         status.sanity.connection = `Failed: ${err.message}`;
     }
 
+    // API Endpoint to get Mixes (Sanity CMS)
+    app.get('/api/mixes', async (req, res) => {
+        try {
+            const query = '*[_type == "mix"]{title, genre, link, "imageUrl": image.asset->url} | order(_createdAt desc)';
+            const mixes = await sanity.fetch(query);
+            res.json(mixes);
+        } catch (error) {
+            console.error('Error fetching mixes:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
+
+    // API Endpoint to get Gallery (Sanity CMS)
+    app.get('/api/gallery', async (req, res) => {
+        try {
+            const query = `*[_type == "gallery"]{
+            type,
+            caption,
+            "url": select(type == 'video' => videoUrl, image.asset->url),
+            "thumbnail": image.asset->url
+        } | order(_createdAt desc)`;
+
+            const gallery = await sanity.fetch(query);
+            res.json(gallery);
+        } catch (error) {
+            console.error('Error fetching gallery:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
     // Test Sheets
     try {
         await sheets.spreadsheets.get({ spreadsheetId: SPREADSHEET_ID });
