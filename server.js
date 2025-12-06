@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('.')); // Serve static files from current directory
+app.use(express.static('public')); // Serve static files from public directory
 
 // Google Sheets Configuration
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
