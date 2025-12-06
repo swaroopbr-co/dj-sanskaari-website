@@ -22,11 +22,15 @@ const rawPrivateKey = process.env.GOOGLE_PRIVATE_KEY;
 let privateKey;
 if (rawPrivateKey) {
     privateKey = rawPrivateKey;
-    // Remove surrounding quotes (single or double)
-    privateKey = privateKey.replace(/^["']|["']$/g, '');
-    // Replace literal \n with actual newlines
-    privateKey = privateKey.replace(/\\n/g, '\n');
-    // Trim whitespace
+
+    // 1. Remove all double quotes (some users paste with quotes)
+    privateKey = privateKey.replace(/"/g, '');
+
+    // 2. Replace literal escaped newlines (\n) with actual newlines
+    // We use split/join to be safe
+    privateKey = privateKey.split('\\n').join('\n');
+
+    // 3. Trim whitespace
     privateKey = privateKey.trim();
 }
 
@@ -58,8 +62,13 @@ app.get('/api/debug', async (req, res) => {
             PORT: process.env.PORT || 'Not Set (Default 3000)',
             SPREADSHEET_ID: process.env.SPREADSHEET_ID ? 'Set' : 'MISSING',
             GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL ? 'Set' : 'MISSING',
-            GOOGLE_PRIVATE_KEY_FORMAT: privateKey ?
-                (privateKey.startsWith('-----BEGIN PRIVATE KEY-----') && privateKey.endsWith('-----END PRIVATE KEY-----') ? 'Valid Header & Footer' : 'Invalid Format') : 'MISSING',
+
+            // Granular Key Checks
+            KEY_HAS_HEADER: privateKey ? privateKey.startsWith('-----BEGIN PRIVATE KEY-----') : false,
+            KEY_HAS_FOOTER: privateKey ? privateKey.endsWith('-----END PRIVATE KEY-----') : false,
+            KEY_FIRST_CHAR_CODE: privateKey ? privateKey.charCodeAt(0) : 'N/A',
+            KEY_LAST_CHAR_CODE: privateKey ? privateKey.charCodeAt(privateKey.length - 1) : 'N/A',
+
             GOOGLE_PRIVATE_KEY_START: privateKey ? privateKey.substring(0, 40).replace(/\n/g, '[NEWLINE]') : 'MISSING',
             GOOGLE_PRIVATE_KEY_END: privateKey ? privateKey.substring(privateKey.length - 40).replace(/\n/g, '[NEWLINE]') : 'MISSING',
             GOOGLE_PRIVATE_KEY_LENGTH: privateKey ? privateKey.length : 0
