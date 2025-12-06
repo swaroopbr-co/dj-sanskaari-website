@@ -97,20 +97,10 @@ app.post('/api/submit', async (req, res) => {
     }
 });
 
-// API Endpoint to get Events (Local Testing)
+// API Endpoint to get Events (Local JSON)
 app.get('/api/events', async (req, res) => {
     try {
-        const response = await sheets.spreadsheets.values.get({
-            spreadsheetId: SPREADSHEET_ID,
-            range: "'Events'!A2:D",
-        });
-        const rows = response.data.values || [];
-        const events = rows.map(row => ({
-            date: row[0],
-            title: row[1],
-            location: row[2],
-            ticketLink: row[3]
-        }));
+        const events = require('./data/events.json');
         res.json(events);
     } catch (error) {
         console.error('Error fetching events:', error);
@@ -118,20 +108,10 @@ app.get('/api/events', async (req, res) => {
     }
 });
 
-// API Endpoint to get Mixes (Local Testing)
+// API Endpoint to get Mixes (Local JSON)
 app.get('/api/mixes', async (req, res) => {
     try {
-        const response = await sheets.spreadsheets.values.get({
-            spreadsheetId: SPREADSHEET_ID,
-            range: "'Mixes'!A2:D",
-        });
-        const rows = response.data.values || [];
-        const mixes = rows.map(row => ({
-            title: row[0],
-            genre: row[1],
-            link: row[2],
-            imageUrl: row[3]
-        }));
+        const mixes = require('./data/mixes.json');
         res.json(mixes);
     } catch (error) {
         console.error('Error fetching mixes:', error);
