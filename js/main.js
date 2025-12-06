@@ -292,7 +292,7 @@ async function loadContent() {
 // Gallery Logic
 async function initGallery() {
     try {
-        const response = await fetch('data/gallery.json');
+        const response = await fetch('/api/gallery');
         const items = await response.json();
         const track = document.getElementById('gallery-track');
         const modal = document.getElementById('gallery-modal');
