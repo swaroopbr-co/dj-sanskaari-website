@@ -21,8 +21,13 @@ const SHEET_NAME = 'Sheet1';
 const rawPrivateKey = process.env.GOOGLE_PRIVATE_KEY;
 let privateKey;
 if (rawPrivateKey) {
-    // Remove surrounding quotes if present and fix newlines
-    privateKey = rawPrivateKey.replace(/^"|"$/g, '').replace(/\\n/g, '\n');
+    privateKey = rawPrivateKey;
+    // Remove surrounding quotes (single or double)
+    privateKey = privateKey.replace(/^["']|["']$/g, '');
+    // Replace literal \n with actual newlines
+    privateKey = privateKey.replace(/\\n/g, '\n');
+    // Trim whitespace
+    privateKey = privateKey.trim();
 }
 
 const auth = new google.auth.GoogleAuth({
@@ -44,8 +49,6 @@ const sanity = createClient({
     apiVersion: '2023-05-03',
 });
 
-// Helper to ensure sheet exists
-
 // ... (rest of code)
 
 // Debug Endpoint
@@ -57,6 +60,8 @@ app.get('/api/debug', async (req, res) => {
             GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL ? 'Set' : 'MISSING',
             GOOGLE_PRIVATE_KEY_FORMAT: privateKey ?
                 (privateKey.startsWith('-----BEGIN PRIVATE KEY-----') && privateKey.endsWith('-----END PRIVATE KEY-----') ? 'Valid Header & Footer' : 'Invalid Format') : 'MISSING',
+            GOOGLE_PRIVATE_KEY_START: privateKey ? privateKey.substring(0, 40).replace(/\n/g, '[NEWLINE]') : 'MISSING',
+            GOOGLE_PRIVATE_KEY_END: privateKey ? privateKey.substring(privateKey.length - 40).replace(/\n/g, '[NEWLINE]') : 'MISSING',
             GOOGLE_PRIVATE_KEY_LENGTH: privateKey ? privateKey.length : 0
         },
         sanity: {
