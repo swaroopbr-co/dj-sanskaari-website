@@ -47,7 +47,7 @@ const sheets = google.sheets({ version: 'v4', auth });
 // Sanity Configuration
 const { createClient } = require('@sanity/client');
 const sanity = createClient({
-    projectId: 'ipk33t5a',
+    projectId: 'h0su65x0kihvnmsvaxtm1vpu',
     dataset: 'production',
     useCdn: false,
     apiVersion: '2023-05-03',
@@ -74,7 +74,7 @@ app.get('/api/debug', async (req, res) => {
             GOOGLE_PRIVATE_KEY_LENGTH: privateKey ? privateKey.length : 0
         },
         sanity: {
-            projectId: 'ipk33t5a',
+            projectId: 'h0su65x0kihvnmsvaxtm1vpu',
             dataset: 'production',
             connection: 'Pending'
         },
