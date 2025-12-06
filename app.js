@@ -51,6 +51,7 @@ const sanity = createClient({
     dataset: 'production',
     useCdn: false,
     apiVersion: '2023-05-03',
+    token: process.env.SANITY_API_TOKEN // Add token for private datasets
 });
 
 // ... (rest of code)
@@ -76,6 +77,7 @@ app.get('/api/debug', async (req, res) => {
         sanity: {
             projectId: 'ipk33t5a',
             dataset: 'production',
+            token: process.env.SANITY_API_TOKEN ? 'Set' : 'MISSING',
             connection: 'Pending'
         },
         sheets: {
