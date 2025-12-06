@@ -85,19 +85,26 @@ async function loadMixes() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadEvents();
-    loadMixes();
-
-    // Existing code...
-    // Initialize components
+document.addEventListener('DOMContentLoaded', async () => {
+    // Initialize UI components first
     initNavigation();
     initSmoothScroll();
     initParallax();
     initScrollAnimations();
-    // loadContent(); // Removed legacy call
-    initGallery();
     initBookingForm();
+
+    // Load Data Sequentially to prevent server overload
+    try {
+        await loadEvents();
+    } catch (e) { console.error('Events failed', e); }
+
+    try {
+        await loadMixes();
+    } catch (e) { console.error('Mixes failed', e); }
+
+    try {
+        await initGallery();
+    } catch (e) { console.error('Gallery failed', e); }
 });
 
 // Navigation Logic
