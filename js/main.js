@@ -24,6 +24,17 @@ async function loadEvents() {
             const day = dateObj.getDate();
             const month = dateObj.toLocaleString('default', { month: 'short' });
 
+            // Status Logic
+            const statusMap = {
+                'coming': { text: 'Upcoming', class: 'status-coming' },
+                'available': { text: 'Tickets Available', class: 'status-available' },
+                'filling': { text: 'Filling Fast', class: 'status-filling' },
+                'soldout': { text: 'Sold Out', class: 'status-soldout' },
+                'concluded': { text: 'Concluded', class: 'status-soldout' } // Re-use soldout style or add new one
+            };
+
+            const statusInfo = statusMap[event.status] || statusMap['coming']; // Default to coming
+
             return `
             <div class="event-card">
                 <div class="event-date">
@@ -33,7 +44,7 @@ async function loadEvents() {
                 <div class="event-details" style="flex: 1;">
                     <div class="event-header">
                         <h3>${event.title}</h3>
-                        <span class="event-status status-coming">Upcoming</span>
+                        <span class="event-status ${statusInfo.class}">${statusInfo.text}</span>
                     </div>
                     <div class="event-venue">
                         <i class="fas fa-map-marker-alt"></i> ${event.location}

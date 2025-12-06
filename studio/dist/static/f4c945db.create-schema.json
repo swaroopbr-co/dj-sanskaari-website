@@ -1,0 +1,184 @@
+[
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "date",
+        "type": "datetime"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "ticketLink",
+        "type": "url"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Coming Soon",
+              "value": "coming"
+            },
+            {
+              "title": "Tickets Available",
+              "value": "available"
+            },
+            {
+              "title": "Filling Fast",
+              "value": "filling"
+            },
+            {
+              "title": "Sold Out",
+              "value": "soldout"
+            },
+            {
+              "title": "Concluded",
+              "value": "concluded"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "available",
+        "name": "status",
+        "type": "string"
+      }
+    ],
+    "name": "event",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "genre",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "link",
+        "type": "url"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "mix",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "caption",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Photo",
+              "value": "photo"
+            },
+            {
+              "title": "Video",
+              "value": "video"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "photo",
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "hidden": "conditional",
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "videoUrl",
+        "type": "url",
+        "title": "Video URL"
+      }
+    ],
+    "name": "gallery",
+    "type": "document"
+  }
+]

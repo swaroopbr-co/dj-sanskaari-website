@@ -2,6 +2,9 @@
     "name": "dj-sanskaari-website",
     "version": "1.0.0",
     "description": "DJ Sanskaari Website with Google Sheets Integration",
+    "scripts": {
+        "start": "node app.js"
+    },
     "dependencies": {
         "@sanity/client": "^7.13.1",
         "body-parser": "^1.20.2",
