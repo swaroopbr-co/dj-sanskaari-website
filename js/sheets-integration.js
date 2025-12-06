@@ -79,7 +79,7 @@ window.submitToGoogleSheets = async function (formData) {
         const result = await response.json();
 
         if (response.ok) {
-            return { result: 'success' };
+            return { success: true };
         } else {
             throw new Error(result.error || 'Submission failed');
         }

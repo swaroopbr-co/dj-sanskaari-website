@@ -97,10 +97,20 @@ app.post('/api/submit', async (req, res) => {
     }
 });
 
-// API Endpoint to get Events (Local JSON)
+// Sanity Configuration
+const { createClient } = require('@sanity/client');
+const sanity = createClient({
+    projectId: 'ipk33t5a',
+    dataset: 'production',
+    useCdn: false,
+    apiVersion: '2023-05-03',
+});
+
+// API Endpoint to get Events (Sanity CMS)
 app.get('/api/events', async (req, res) => {
     try {
-        const events = require('./data/events.json');
+        const query = '*[_type == "event"]{date, title, location, ticketLink} | order(date asc)';
+        const events = await sanity.fetch(query);
         res.json(events);
     } catch (error) {
         console.error('Error fetching events:', error);
@@ -108,10 +118,11 @@ app.get('/api/events', async (req, res) => {
     }
 });
 
-// API Endpoint to get Mixes (Local JSON)
+// API Endpoint to get Mixes (Sanity CMS)
 app.get('/api/mixes', async (req, res) => {
     try {
-        const mixes = require('./data/mixes.json');
+        const query = '*[_type == "mix"]{title, genre, link, "imageUrl": image.asset->url} | order(_createdAt desc)';
+        const mixes = await sanity.fetch(query);
         res.json(mixes);
     } catch (error) {
         console.error('Error fetching mixes:', error);
