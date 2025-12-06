@@ -7,7 +7,7 @@ export default defineConfig({
     name: 'default',
     title: 'DJ Sanskaari CMS',
 
-    projectId: 'h0su65x0kihvnmsvaxtm1vpu',
+    projectId: 'ipk33t5a',
     dataset: 'production',
 
     plugins: [deskTool(), visionTool()],
