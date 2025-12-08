@@ -164,7 +164,7 @@ app.get('/api/events', async (req, res) => {
 
 app.get('/api/mixes', async (req, res) => {
     try {
-        const query = '*[_type == "mix"]{title, genre, link, "imageUrl": coverImage.asset->url, order} | order(order asc)';
+        const query = '*[_type == "mix"]{title, genre, link, "imageUrl": image.asset->url, order} | order(order asc)';
         const mixes = await sanity.fetch(query);
         res.json(mixes);
     } catch (error) {
