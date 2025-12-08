@@ -264,7 +264,7 @@ h6 {
 
 .scroll-indicator {
     position: absolute;
-    bottom: 30px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -1085,6 +1085,10 @@ textarea:focus {
     .hero-subtitle {
         font-size: 1rem;
         margin-bottom: 6rem;
+    }
+
+    .scroll-indicator {
+        bottom: 30px;
     }
 
     /* Events Section */
