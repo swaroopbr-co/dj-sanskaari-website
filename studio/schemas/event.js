@@ -24,6 +24,12 @@ export default {
             type: 'url',
         },
         {
+            name: 'order',
+            title: 'Order',
+            type: 'number',
+            description: 'Order of appearance (lower numbers first)'
+        },
+        {
             name: 'status',
             title: 'Status',
             type: 'string',

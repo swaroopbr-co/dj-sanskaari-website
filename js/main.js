@@ -35,6 +35,9 @@ async function loadEvents() {
 
             const statusInfo = statusMap[event.status] || statusMap['coming']; // Default to coming
 
+            const showBookButton = event.ticketLink && event.status !== 'concluded';
+            const locationDisplay = event.location ? `<i class="fas fa-map-marker-alt"></i> ${event.location}` : '';
+
             return `
             <div class="event-card">
                 <div class="event-date">
@@ -47,10 +50,10 @@ async function loadEvents() {
                         <span class="event-status ${statusInfo.class}">${statusInfo.text}</span>
                     </div>
                     <div class="event-venue">
-                        <i class="fas fa-map-marker-alt"></i> ${event.location}
+                        ${locationDisplay}
                     </div>
                     <div class="event-actions">
-                        <a href="${event.ticketLink}" target="_blank" class="btn btn-sm btn-book">Book Now</a>
+                        ${showBookButton ? `<a href="${event.ticketLink}" target="_blank" class="btn btn-sm btn-book">Book Now</a>` : ''}
                     </div>
                 </div>
             </div>

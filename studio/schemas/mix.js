@@ -14,6 +14,12 @@ export default {
             type: 'string',
         },
         {
+            name: 'order',
+            title: 'Order',
+            type: 'number',
+            description: 'Order of appearance (lower numbers first)'
+        },
+        {
             name: 'link',
             title: 'Link',
             type: 'url',

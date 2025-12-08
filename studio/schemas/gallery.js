@@ -22,6 +22,12 @@ export default {
             initialValue: 'photo'
         },
         {
+            name: 'order',
+            title: 'Order',
+            type: 'number',
+            description: 'Order of appearance (lower numbers first)'
+        },
+        {
             name: 'image',
             title: 'Image',
             type: 'image',

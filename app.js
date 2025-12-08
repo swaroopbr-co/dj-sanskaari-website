@@ -150,10 +150,10 @@ app.post('/api/submit', async (req, res) => {
     }
 });
 
-// API Endpoint to get Events (Sanity CMS)
+// API Routes
 app.get('/api/events', async (req, res) => {
     try {
-        const query = '*[_type == "event"]{date, title, location, ticketLink, status} | order(date asc)';
+        const query = '*[_type == "event"]{date, title, location, ticketLink, status, order} | order(order asc)';
         const events = await sanity.fetch(query);
         res.json(events);
     } catch (error) {
@@ -162,10 +162,9 @@ app.get('/api/events', async (req, res) => {
     }
 });
 
-// API Endpoint to get Mixes (Sanity CMS)
 app.get('/api/mixes', async (req, res) => {
     try {
-        const query = '*[_type == "mix"]{title, genre, link, "imageUrl": image.asset->url} | order(_createdAt desc)';
+        const query = '*[_type == "mix"]{title, genre, link, "imageUrl": coverImage.asset->url, order} | order(order asc)';
         const mixes = await sanity.fetch(query);
         res.json(mixes);
     } catch (error) {
@@ -174,16 +173,9 @@ app.get('/api/mixes', async (req, res) => {
     }
 });
 
-// API Endpoint to get Gallery (Sanity CMS)
 app.get('/api/gallery', async (req, res) => {
     try {
-        const query = `*[_type == "gallery"]{
-        type,
-        caption,
-        "url": select(type == 'video' => videoUrl, image.asset->url),
-        "thumbnail": image.asset->url
-    } | order(_createdAt desc)`;
-
+        const query = '*[_type == "gallery"]{type, "url": image.asset->url, "thumbnail": image.asset->url, videoUrl, order} | order(order asc)';
         const gallery = await sanity.fetch(query);
         res.json(gallery);
     } catch (error) {
