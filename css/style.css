@@ -1064,3 +1064,89 @@ textarea:focus {
         gap: 1rem;
     }
 }
+
+/* Additional Mobile Optimizations (v2.0) */
+@media (max-width: 768px) {
+
+    /* Hero Section */
+    .hero-title {
+        font-size: 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        line-height: 1.1;
+    }
+
+    .hero-title .accent {
+        font-size: 2rem;
+        margin: 0.5rem 0;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Events Section */
+    .events-list {
+        grid-template-columns: 1fr;
+    }
+
+    .event-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .event-date {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        padding-right: 0;
+        padding-bottom: 1rem;
+        margin-right: 0;
+        margin-bottom: 1rem;
+        width: 100%;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .date-day {
+        font-size: 1.5rem;
+    }
+
+    .event-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .event-venue {
+        justify-content: center;
+    }
+
+    /* Mixes Section */
+    .mixes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Booking Section */
+    .booking-container {
+        padding: 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* General */
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .container {
+        padding: 0 1.5rem;
+    }
+}
