@@ -1153,4 +1153,21 @@ textarea:focus {
     .container {
         padding: 0 1.5rem;
     }
+
+    /* Nav Brand Fix */
+    .nav-brand {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        gap: 0.5rem;
+    }
+
+    .brand-title {
+        font-size: 1.1rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.65rem;
+        padding-left: 0.5rem;
+        letter-spacing: 1px;
+    }
 }
