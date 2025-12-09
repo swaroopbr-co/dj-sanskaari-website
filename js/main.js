@@ -227,8 +227,8 @@ async function initGallery() {
         const modalContent = modal.querySelector('.modal-media-container');
         const modalClose = modal.querySelector('.modal-close');
 
-        // Use items directly (removed duplication)
-        const allItems = items;
+        // Duplicate items for seamless infinite scroll
+        const allItems = [...items, ...items, ...items, ...items]; // Quadruple items for smoother loop
 
         allItems.forEach(item => {
             const el = document.createElement('div');
@@ -267,61 +267,52 @@ async function initGallery() {
             }
         });
 
-        // Auto-Scroll Logic with Manual Override
+        // Auto-Scroll Logic
+        const scroller = document.querySelector('.gallery-scroller');
         let scrollSpeed = 1; // Pixels per frame
         let isPaused = false;
         let animationId;
 
-        const startAutoScroll = () => {
-            if (!animationId) {
-                autoScroll();
-            }
-        };
+        // Pause on hover
+        const gallerySection = document.querySelector('.gallery-section');
+        gallerySection.addEventListener('mouseenter', () => {
+            isPaused = true;
+        });
+        gallerySection.addEventListener('mouseleave', () => {
+            isPaused = false;
+        });
 
-        const stopAutoScroll = () => {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-        };
+        // Manual Navigation
+        const prevBtn = document.getElementById('gallery-prev');
+        const nextBtn = document.getElementById('gallery-next');
+
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                scroller.scrollLeft -= 300;
+            });
+
+            nextBtn.addEventListener('click', () => {
+                scroller.scrollLeft += 300;
+            });
+        }
 
         const autoScroll = () => {
-            if (!isPaused) {
-                const scroller = document.querySelector('.gallery-scroller');
-                if (scroller) {
-                    scroller.scrollLeft += scrollSpeed;
+            if (!isPaused && scroller) {
+                scroller.scrollLeft += scrollSpeed;
 
-                    // Reset if reached halfway (since we duplicated items)
-                    // We need to calculate the width of a single set of items
-                    // Approximate check: if scrollLeft is very large, reset?
-                    // Better: Check if we are near the end.
-                    // Since we have 2 sets, we can reset to 0 when we reach the start of the second set.
-                    // However, exact pixel calculation might be tricky with dynamic content.
-                    // Simple infinite loop approach:
-                    if (scroller.scrollLeft >= (scroller.scrollWidth - scroller.clientWidth) - 10) {
-                        scroller.scrollLeft = 0; // Snap back to start (imperfect but works for simple marquee)
-                        // A better approach for seamless loop requires exact width measurement, 
-                        // but let's try a simple "reset when end reached" first.
-                        // Actually, for seamless, we should reset when we've scrolled past the first set.
-                        // Let's assume the user has enough items.
-                    }
+                // Infinite Scroll Reset
+                // If we've scrolled past the first set of items (approx), reset to 0
+                // This is a simple check; for perfect seamlessness, we'd calculate exact widths.
+                // Since we quadrupled items, resetting when we reach halfway is safe.
+                if (scroller.scrollLeft >= (scroller.scrollWidth - scroller.clientWidth) / 2) {
+                    scroller.scrollLeft = 0;
                 }
             }
             animationId = requestAnimationFrame(autoScroll);
         };
 
-        // Pause on interaction
-        const scroller = document.querySelector('.gallery-scroller');
-        scroller.addEventListener('mouseenter', () => isPaused = true);
-        scroller.addEventListener('mouseleave', () => isPaused = false);
-        scroller.addEventListener('touchstart', () => isPaused = true);
-        scroller.addEventListener('touchend', () => {
-            setTimeout(() => isPaused = false, 2000); // Resume after 2s delay
-        });
-
-        // Start
-        startAutoScroll();
-
+        // Start animation
+        autoScroll();
     } catch (error) {
         console.error('Error loading gallery:', error);
     }
