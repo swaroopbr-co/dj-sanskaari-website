@@ -227,8 +227,8 @@ async function initGallery() {
         const modalContent = modal.querySelector('.modal-media-container');
         const modalClose = modal.querySelector('.modal-close');
 
-        // Duplicate items for seamless infinite scroll
-        const allItems = [...items, ...items]; // Double items for loop
+        // No duplication for static gallery
+        const allItems = items;
 
         allItems.forEach(item => {
             const el = document.createElement('div');
@@ -267,51 +267,20 @@ async function initGallery() {
             }
         });
 
-        // Auto-Scroll Logic
-        const scroller = document.querySelector('.gallery-scroller');
-        let scrollSpeed = 1; // Pixels per frame
-        let isPaused = false;
-        let animationId;
-
-        // Pause on hover
-        const gallerySection = document.querySelector('.gallery-section');
-        gallerySection.addEventListener('mouseenter', () => {
-            isPaused = true;
-        });
-        gallerySection.addEventListener('mouseleave', () => {
-            isPaused = false;
-        });
-
         // Manual Navigation
+        const scroller = document.querySelector('.gallery-scroller');
         const prevBtn = document.getElementById('gallery-prev');
         const nextBtn = document.getElementById('gallery-next');
 
-        if (prevBtn && nextBtn) {
+        if (prevBtn && nextBtn && scroller) {
             prevBtn.addEventListener('click', () => {
-                scroller.scrollLeft -= 300;
+                scroller.scrollBy({ left: -300, behavior: 'smooth' });
             });
 
             nextBtn.addEventListener('click', () => {
-                scroller.scrollLeft += 300;
+                scroller.scrollBy({ left: 300, behavior: 'smooth' });
             });
         }
-
-        const autoScroll = () => {
-            if (!isPaused && scroller) {
-                scroller.scrollLeft += scrollSpeed;
-
-                // Infinite Scroll Reset
-                // Reset when we reach the halfway point (end of first set)
-                // Using scrollWidth / 2 is a good approximation since we doubled the content
-                if (scroller.scrollLeft >= scroller.scrollWidth / 2) {
-                    scroller.scrollLeft = 0;
-                }
-            }
-            animationId = requestAnimationFrame(autoScroll);
-        };
-
-        // Start animation
-        autoScroll();
     } catch (error) {
         console.error('Error loading gallery:', error);
     }
