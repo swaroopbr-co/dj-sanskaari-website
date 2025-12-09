@@ -1,6 +1,6 @@
 {
     "name": "dj-sanskaari-website",
-    "version": "2.5.0",
+    "version": "2.6.0",
     "description": "DJ Sanskaari Website with Google Sheets Integration",
     "scripts": {
         "start": "node app.js"

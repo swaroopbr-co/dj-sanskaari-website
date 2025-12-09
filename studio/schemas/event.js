@@ -11,7 +11,16 @@ export default {
         {
             name: 'date',
             title: 'Date',
-            type: 'datetime',
+            type: 'date', // Changed from datetime to date
+            options: {
+                dateFormat: 'YYYY-MM-DD',
+            }
+        },
+        {
+            name: 'time',
+            title: 'Time',
+            type: 'string',
+            description: 'e.g., "10:00 PM" or "22:00"'
         },
         {
             name: 'location',

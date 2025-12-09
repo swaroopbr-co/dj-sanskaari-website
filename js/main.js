@@ -19,10 +19,17 @@ async function loadEvents() {
         }
 
         container.innerHTML = events.map(event => {
-            // Parse date to get Day and Month
-            const dateObj = new Date(event.date);
-            const day = dateObj.getDate();
-            const month = dateObj.toLocaleString('default', { month: 'short' });
+            // Parse date string (YYYY-MM-DD) safely
+            // Note: 'date' field is now just a string like "2023-12-25"
+            let day = '', month = '';
+            if (event.date) {
+                const parts = event.date.split('-');
+                if (parts.length === 3) {
+                    const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+                    day = dateObj.getDate();
+                    month = dateObj.toLocaleString('default', { month: 'short' });
+                }
+            }
 
             // Status Logic
             const statusMap = {
@@ -30,13 +37,22 @@ async function loadEvents() {
                 'available': { text: 'Tickets Available', class: 'status-available' },
                 'filling': { text: 'Filling Fast', class: 'status-filling' },
                 'soldout': { text: 'Sold Out', class: 'status-soldout' },
-                'concluded': { text: 'Concluded', class: 'status-soldout' } // Re-use soldout style or add new one
+                'concluded': { text: 'Concluded', class: 'status-soldout' }
             };
 
-            const statusInfo = statusMap[event.status] || statusMap['coming']; // Default to coming
+            const statusInfo = statusMap[event.status] || statusMap['coming'];
 
             const showBookButton = event.ticketLink && event.status !== 'concluded';
-            const locationDisplay = event.location ? `<i class="fas fa-map-marker-alt"></i> ${event.location}` : '';
+
+            // Location & Time Display
+            let metaDisplay = '';
+            if (event.location) {
+                metaDisplay += `<i class="fas fa-map-marker-alt"></i> ${event.location}`;
+            }
+            if (event.time) {
+                if (metaDisplay) metaDisplay += ' | ';
+                metaDisplay += `<i class="far fa-clock"></i> ${event.time}`;
+            }
 
             return `
             <div class="event-card">
@@ -50,7 +66,7 @@ async function loadEvents() {
                         <span class="event-status ${statusInfo.class}">${statusInfo.text}</span>
                     </div>
                     <div class="event-venue">
-                        ${locationDisplay}
+                        ${metaDisplay}
                     </div>
                     <div class="event-actions">
                         ${showBookButton ? `<a href="${event.ticketLink}" target="_blank" class="btn btn-sm btn-book">Book Now</a>` : ''}

@@ -153,7 +153,7 @@ app.post('/api/submit', async (req, res) => {
 // API Routes
 app.get('/api/events', async (req, res) => {
     try {
-        const query = '*[_type == "event"]{date, title, location, ticketLink, status, order} | order(order asc)';
+        const query = '*[_type == "event"]{date, time, title, location, ticketLink, status, order} | order(order asc)';
         const events = await sanity.fetch(query);
         res.json(events);
     } catch (error) {
