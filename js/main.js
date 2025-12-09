@@ -228,7 +228,7 @@ async function initGallery() {
         const modalClose = modal.querySelector('.modal-close');
 
         // Duplicate items for seamless infinite scroll
-        const allItems = [...items, ...items, ...items, ...items]; // Quadruple items for smoother loop
+        const allItems = [...items, ...items]; // Double items for loop
 
         allItems.forEach(item => {
             const el = document.createElement('div');
@@ -301,10 +301,9 @@ async function initGallery() {
                 scroller.scrollLeft += scrollSpeed;
 
                 // Infinite Scroll Reset
-                // If we've scrolled past the first set of items (approx), reset to 0
-                // This is a simple check; for perfect seamlessness, we'd calculate exact widths.
-                // Since we quadrupled items, resetting when we reach halfway is safe.
-                if (scroller.scrollLeft >= (scroller.scrollWidth - scroller.clientWidth) / 2) {
+                // Reset when we reach the halfway point (end of first set)
+                // Using scrollWidth / 2 is a good approximation since we doubled the content
+                if (scroller.scrollLeft >= scroller.scrollWidth / 2) {
                     scroller.scrollLeft = 0;
                 }
             }
